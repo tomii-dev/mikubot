@@ -23,13 +23,14 @@ public:
     {
         inline ModuleCreator(const std::string& name)
         {
-            static_assert(std::is_base_of<Module, ModuleType>::value, name + " is not a module!");
+            static_assert(std::is_base_of<Module, ModuleType>::value, "provided type is not a module!");
 
-            ModuleManager::s_modules.insert(name, std::make_unique<ModuleType>());
+            ModuleManager::s_modules.emplace(name, std::make_unique<ModuleType>());
         }
     };
 
-#define DEFINE_MODULE(module) ModuleManager::ModuleCreator<module>(#module);
+#define DEFINE_MODULE(module) ModuleManager::ModuleCreator<module> g_creator ##module (#module);
+
 private:
     CommandRegistry* m_cmdReg;
 
