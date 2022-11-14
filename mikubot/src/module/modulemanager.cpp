@@ -2,7 +2,7 @@
 
 #include "command/commandregistry.hpp"
 
-std::vector<std::unique_ptr<Module>> ModuleManager::s_modules;
+std::map<std::string, std::unique_ptr<Module>> ModuleManager::s_modules;
 
 ModuleManager::ModuleManager(CommandRegistry* cmdReg)
     : m_cmdReg(cmdReg)
