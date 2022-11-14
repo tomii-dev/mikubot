@@ -2,7 +2,7 @@
 
 #include "module.hpp"
 
-#include <vector>
+#include <map>
 #include <memory>
 #include <assert.h>
 #include <type_traits>
@@ -16,20 +16,22 @@ public:
 
     void setupModules();
     
+    inline static const std::string moduleDesc(const std::string& module) { return s_modules.at(module)->desc(); }
+    
     template <typename ModuleType>
     struct ModuleCreator
     {
-        inline ModuleCreator()
+        inline ModuleCreator(const std::string& name)
         {
-            static_assert(std::is_base_of<Module, ModuleType>::value, "provided type is not a module!");
+            static_assert(std::is_base_of<Module, ModuleType>::value, name + " is not a module!");
 
-            ModuleManager::s_modules.push_back(std::make_unique<ModuleType>());
+            ModuleManager::s_modules.insert(name, std::make_unique<ModuleType>());
         }
     };
 
-#define DEFINE_MODULE(module) ModuleManager::ModuleCreator<module> g_creator ##module;
+#define DEFINE_MODULE(module) ModuleManager::ModuleCreator<module>(#module);
 private:
     CommandRegistry* m_cmdReg;
 
-    static std::vector<std::unique_ptr<Module>> s_modules;
+    static std::map<std::string, std::unique_ptr<Module>> s_modules;
 };
