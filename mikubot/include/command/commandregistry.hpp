@@ -17,6 +17,5 @@ public:
 
     void addCommand(Command* cmd); 
 private:
-    using Action = std::function<void(Command::Args)>;
-    std::map<std::string, Action> m_commands;
+    std::map<std::string, Command*> m_commands;
 };
