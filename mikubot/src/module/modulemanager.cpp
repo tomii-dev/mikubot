@@ -10,7 +10,7 @@ ModuleManager::ModuleManager(CommandRegistry* cmdReg)
 
 void ModuleManager::setupModules()
 {
-    for(std::unique_ptr<Module>& module : s_modules)
+    for(auto& [name, module] : s_modules)
     {
         module->init();
         for(const std::unique_ptr<Command>& cmd : module->m_commands)
