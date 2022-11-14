@@ -2,5 +2,5 @@
 
 int main()
 {
-    MikuBot::make();
+    MikuBot::make().start();
 }
