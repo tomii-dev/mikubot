@@ -2,13 +2,15 @@
 
 #include "command/commandregistry.hpp"
 
+std::vector<std::unique_ptr<Module>> ModuleManager::s_modules;
+
 ModuleManager::ModuleManager(CommandRegistry* cmdReg)
     : m_cmdReg(cmdReg)
 {}
 
 void ModuleManager::setupModules()
 {
-    for(const std::unique_ptr<Module>& module : m_modules)
+    for(std::unique_ptr<Module>& module : s_modules)
     {
         module->init();
         for(const std::unique_ptr<Command>& cmd : module->m_commands)
