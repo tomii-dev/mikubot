@@ -1,5 +1,7 @@
 #include "mikubot.hpp"
 
+#include "secrets.hpp"
+
 #include <sstream>
 #include <fstream>
 #include <assert.h>
@@ -18,11 +20,7 @@ std::unique_ptr<MikuBot> MikuBot::s_instance;
 
 MikuBot::MikuBot() : m_moduleMgr(&m_cmdReg)
 {
-    std::stringstream ss;
-    std::ifstream ifs("token");
-    ss << ifs.rdbuf();
-
-    m_cluster = std::make_unique<dpp::cluster>(ss.str());
+    m_cluster = std::make_unique<dpp::cluster>(BOT_TOKEN);
 
     m_cluster->on_slashcommand([this](const dpp::slashcommand_t& e){ m_cmdReg.handleCommand(e); });
     m_cluster->on_ready([this](const dpp::ready_t&){ m_moduleMgr.setupModules(); });
