@@ -24,6 +24,11 @@ MikuBot::MikuBot() : m_moduleMgr(&m_cmdReg)
 
     m_cluster->on_slashcommand([this](const dpp::slashcommand_t& e){ m_cmdReg.handleCommand(e); });
     m_cluster->on_ready([this](const dpp::ready_t&){ m_moduleMgr.setupModules(); });
+}
 
+int MikuBot::start()
+{
     m_cluster->start(dpp::st_wait);
+
+    return 0;
 }

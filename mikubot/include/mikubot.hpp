@@ -12,7 +12,10 @@ class MikuBot
 public:
     static MikuBot& make();
     
+    int start();
+
     static inline dpp::cluster& cluster() { return *s_instance->m_cluster.get(); }
+
 private:
     MikuBot();
         
