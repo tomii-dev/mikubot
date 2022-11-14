@@ -12,7 +12,7 @@ class Module
 {
 public: 
     virtual void init() = 0;
-    virtual const std::string& desc() = 0;
+    virtual const std::string desc() = 0;
 
 protected:
     inline void addCommand(std::unique_ptr<Command> cmd) { m_commands.push_back(std::move(cmd)); };
