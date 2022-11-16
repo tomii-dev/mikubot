@@ -22,7 +22,7 @@ public:
 
     Option(const std::string& name, const std::string& desc, Type type);
 
-    void addChoice(const std::string& name, const dpp::command_value& val);
+    Option& addChoice(const std::string& name, const dpp::command_value& val);
     
     inline const std::string& name() const { return m_name; }
     inline const std::string& desc() const { return m_desc; }

@@ -36,7 +36,9 @@ Option::Option(const std::string& name, const std::string& desc, Type type)
     m_opt = dpp::command_option(typeMap.at(type), name, desc);
 }
 
-void Option::addChoice(const std::string& name, const dpp::command_value& val)
+Option& Option::addChoice(const std::string& name, const dpp::command_value& val)
 {
    m_opt.add_choice(dpp::command_option_choice(name, val)); 
+
+   return *this;
 }
