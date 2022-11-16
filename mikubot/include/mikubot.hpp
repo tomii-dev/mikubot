@@ -26,3 +26,5 @@ private:
 
     static std::unique_ptr<MikuBot> s_instance;
 };
+
+static inline dpp::cluster& miku() { return MikuBot::cluster(); }
