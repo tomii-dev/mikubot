@@ -12,7 +12,14 @@ class Module
 {
 public: 
     virtual void init() = 0;
-    virtual const std::string desc() = 0;
+
+    // method to be called after all modules have been initialised,
+    // helpful for modules such as Help that reference other modules
+    virtual void postInit() {}
+
+    virtual const std::string desc() const = 0;
+
+    const std::vector<const Command*> commands() const;
 
 protected:
     inline void addCommand(std::unique_ptr<Command> cmd) { m_commands.push_back(std::move(cmd)); };
