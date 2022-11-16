@@ -19,6 +19,7 @@ public:
     virtual void call(const Args& args, Context ctx) = 0;
 
     inline const std::string& name() const { return m_name; }
+    inline const std::string& desc() const { return m_desc; }
     inline const std::vector<Option>& options() const { return m_options; }
     
     // should only be called once, by CommandRegistry
@@ -29,7 +30,14 @@ protected:
 
 private:
     std::string m_name;
+    std::string m_desc;
+
     dpp::slashcommand m_cmd;
 
     std::vector<Option> m_options;
 };
+
+#define SETUP_COMMAND(name, module, str, desc) class name##Command : public Command { module* m_module; public: name##Command(module* mod); \
+    void call(const Args&, Context) override; }; name##Command::name##Command(module* mod) : Command(str, desc), m_module(mod)
+
+#define COMMAND(name) void name##Command::call(const Args& args, Context ctx)
