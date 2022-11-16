@@ -16,4 +16,25 @@ void ModuleManager::setupModules()
         for(const std::unique_ptr<Command>& cmd : module->m_commands)
             m_cmdReg->addCommand(cmd.get());
     }
+
+    for(auto& [name, module] : s_modules)
+        module->postInit();
+}
+
+/* static */ const std::vector<std::string> ModuleManager::modules()
+{
+    std::vector<std::string> modules;
+
+    for(const auto& kv : s_modules)
+        modules.push_back(kv.first);
+
+    return modules;
+}
+
+/* static */ const Module* ModuleManager::getModule(const std::string& name)
+{
+    if(!s_modules.count(name))
+        return nullptr;
+
+    return s_modules[name].get();
 }
