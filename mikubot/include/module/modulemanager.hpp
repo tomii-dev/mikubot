@@ -3,6 +3,7 @@
 #include "module.hpp"
 
 #include <map>
+#include <vector>
 #include <memory>
 #include <assert.h>
 #include <type_traits>
@@ -16,8 +17,9 @@ public:
 
     void setupModules();
     
-    inline static const std::string moduleDesc(const std::string& module) { return s_modules.at(module)->desc(); }
-    
+    static const std::vector<std::string> modules();
+    static const Module* getModule(const std::string& name);
+
     template <typename ModuleType>
     struct ModuleCreator
     {
