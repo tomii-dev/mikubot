@@ -2,8 +2,23 @@
 
 #include <map>
 
+const std::map<Option::Type, std::string> Option::TYPE_STRS = 
+{
+    {STRING, "string"},
+    {INT, "integer"},
+    {BOOL, "bool (true/false)"},
+    {USER, "user"},
+    {CHANNEL, "channel"},
+    {ROLE, "role"},
+    {MENTIONABLE, "mentionable"},
+    {DOUBLE, "number"},
+    {ATTACHMENT, "attachment"}
+};
+
 Option::Option(const std::string& name, const std::string& desc, Type type)
     : m_name(name)
+    , m_desc(desc)
+    , m_type(type)
 {
     static const std::map<Type, dpp::command_option_type> typeMap =
     {

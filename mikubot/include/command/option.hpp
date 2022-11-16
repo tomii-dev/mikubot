@@ -25,10 +25,16 @@ public:
     void addChoice(const std::string& name, const dpp::command_value& val);
     
     inline const std::string& name() const { return m_name; }
+    inline const std::string& desc() const { return m_desc; }
+    inline const std::string& typeStr() const { return TYPE_STRS.at(m_type); }
     inline const dpp::command_option& get() const { return m_opt; }
 
 private:
     std::string m_name;
+    std::string m_desc;
+    Type m_type;
+
+    static const std::map<Type, std::string> TYPE_STRS;
 
     dpp::command_option m_opt;
 };
