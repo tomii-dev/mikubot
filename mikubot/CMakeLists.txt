@@ -7,7 +7,9 @@ add_executable(mikubot
     src/command/option.cpp
 
     src/module/modulemanager.cpp
+    src/module/module.cpp
     src/module/help.cpp
+    src/module/voice.cpp
 )
 
 target_compile_features(mikubot PRIVATE cxx_std_17)
