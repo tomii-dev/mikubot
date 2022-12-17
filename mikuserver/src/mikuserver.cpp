@@ -1,10 +1,9 @@
 #include "mikuserver.hpp"
 
 #include "resource.hpp"
+#include "secrets.hpp"
 
 #include <assert.h>
-
-#include <httpserver.hpp>
 
 std::unique_ptr<MikuServer> MikuServer::s_instance;
 
@@ -28,4 +27,15 @@ int MikuServer::start(uint16_t port)
     ws.start(true);
 
     return 0;
+}
+
+/* static */ bool MikuServer::verifyRequest(const std::map<std::string, std::string, httpserver::http::header_comparator>& headers)
+{
+    if(!headers.count("authorization"))
+        return false;
+
+    if(headers.at("authorization") != BOT_TOKEN)
+        return false;
+
+    return true;
 }
