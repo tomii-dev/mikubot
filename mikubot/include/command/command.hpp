@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <memory>
 
 #include <dpp/dpp.h>
 
@@ -25,8 +26,10 @@ public:
     // should only be called once, by CommandRegistry
     const dpp::slashcommand& get();
 
+    virtual ~Command() = default;
+
 protected:
-    Option& addOption(const std::string& name, const std::string& desc, Option::Type type);
+    Option& addOption(const std::string& name, const std::string& desc, Option::Type type, bool required = false);
 
 private:
     std::string m_name;
@@ -38,6 +41,8 @@ private:
 };
 
 #define SETUP_COMMAND(name, module, str, desc) class name##Command : public Command { module* m_module; public: name##Command(module* mod); \
-    void call(const Args&, Context) override; }; name##Command::name##Command(module* mod) : Command(str, desc), m_module(mod)
+    void call(const Args&, Context) override; static std::unique_ptr<Command> make(module* mod) { return std::make_unique<name##Command>(mod); } }; name##Command::name##Command(module* mod) : Command(str, desc), m_module(mod)
 
 #define COMMAND(name) void name##Command::call(const Args& args, Context ctx)
+#define ARG(name, type) std::get<type>(args.at(name))
+#define HAS_ARG(name) args.count(name)                                                                                                                                                                                            

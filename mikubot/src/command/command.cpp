@@ -8,9 +8,9 @@ Command::Command(const std::string& name, const std::string& desc)
     , m_cmd(name, desc, MikuBot::cluster().me.id)
 {}
 
-Option& Command::addOption(const std::string& name, const std::string& desc, Option::Type type)
+Option& Command::addOption(const std::string& name, const std::string& desc, Option::Type type, bool required)
 {
-    m_options.push_back(Option(name, desc, type));
+    m_options.push_back(Option(name, desc, type, required));
 
     return m_options.back();
 }
