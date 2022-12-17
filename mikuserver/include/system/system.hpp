@@ -1,5 +1,5 @@
 #pragma once
-
+ 
 #include "resource.hpp"
 
 #include <vector>
@@ -15,12 +15,16 @@ public:
     virtual void init() = 0;
 
     void gatherResources(std::vector<IResource*>& resources);
-
-    template <typename ReturnType>
-    struct MethodReturn
+    
+    struct Status
     {
         enum Code { OK, NOT_OK } code;
         const std::string msg;
+    };
+
+    template <typename ReturnType>
+    struct MethodReturn : public Status
+    {
         ReturnType data;
     };
 
