@@ -15,7 +15,7 @@ const std::map<Option::Type, std::string> Option::TYPE_STRS =
     {ATTACHMENT, "attachment"}
 };
 
-Option::Option(const std::string& name, const std::string& desc, Type type)
+Option::Option(const std::string& name, const std::string& desc, Type type, bool required)
     : m_name(name)
     , m_desc(desc)
     , m_type(type)
@@ -33,12 +33,13 @@ Option::Option(const std::string& name, const std::string& desc, Type type)
         {ATTACHMENT, dpp::co_attachment}
     };
 
-    m_opt = dpp::command_option(typeMap.at(type), name, desc);
+    m_opt = dpp::command_option(typeMap.at(type), name, desc, required);
 }
 
 Option& Option::addChoice(const std::string& name, const dpp::command_value& val)
 {
-   m_opt.add_choice(dpp::command_option_choice(name, val)); 
+    m_opt.add_choice(dpp::command_option_choice(name, val)); 
+    m_choices.push_back(name);
 
-   return *this;
+    return *this;
 }
